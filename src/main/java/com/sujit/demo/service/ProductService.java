@@ -56,6 +56,14 @@ public class ProductService {
             if (filter.getType() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("type"), filter.getType()));
             }
+            if (filter.getStartDate() != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("date"), filter.getStartDate()));
+            }
+
+            if (filter.getEndDate() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("date"), filter.getEndDate()));
+            }
+
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
