@@ -22,10 +22,14 @@ public class ProductService {
     private ProductRepository productRepository;
 
 
-    public Page<Product> filterProducts(ProductFilter filter, int pageNumber, int pageSize, Set<String> sortBy) {
+    public Page<Product> filterProducts(ProductFilter filter, int pageNumber, int pageSize, Set<String> sortBy,String sortDirection) {
         List<Sort.Order> orders = new ArrayList<>();
         for (String sortProperty : sortBy) {
-            orders.add(Sort.Order.asc(sortProperty));
+            if ("desc".equalsIgnoreCase(sortDirection)) {
+                orders.add(Sort.Order.desc(sortProperty));
+            } else {
+                orders.add(Sort.Order.asc(sortProperty));
+            }
         }
         Sort sort = Sort.by(orders);
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);

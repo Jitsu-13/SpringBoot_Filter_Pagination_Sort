@@ -26,12 +26,10 @@ public class ProductController {
                                              @RequestParam(defaultValue = "0") int pageNumber,
                                              @RequestParam(defaultValue = "10") int pageSize,
                                              @RequestParam(defaultValue = "id") Set<String> sortBy,
-                                             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-                                             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate){
-        filter.setStartDate(startDate);
-        filter.setEndDate(endDate);
+                                             @RequestParam(required = false, defaultValue = "asc") String sortDirection){
 
-        return productService.filterProducts(filter, pageNumber, pageSize, sortBy);
+
+        return productService.filterProducts(filter, pageNumber, pageSize, sortBy,sortDirection);
     }
 }
 
