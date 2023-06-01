@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProductService {
@@ -21,8 +22,13 @@ public class ProductService {
     private ProductRepository productRepository;
 
 
-    public Page<Product> filterProducts(ProductFilter filter, int pageNumber, int pageSize, String sortBy) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+    public Page<Product> filterProducts(ProductFilter filter, int pageNumber, int pageSize, Set<String> sortBy) {
+        List<Sort.Order> orders = new ArrayList<>();
+        for (String sortProperty : sortBy) {
+            orders.add(Sort.Order.asc(sortProperty));
+        }
+        Sort sort = Sort.by(orders);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
         Specification<Product> specification = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();

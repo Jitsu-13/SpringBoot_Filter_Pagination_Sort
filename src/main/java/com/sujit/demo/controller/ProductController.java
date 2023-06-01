@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -22,7 +24,7 @@ public class ProductController {
     public Page<Product> getFilteredProducts(ProductFilter filter,
                                              @RequestParam(defaultValue = "0") int pageNumber,
                                              @RequestParam(defaultValue = "10") int pageSize,
-                                             @RequestParam(defaultValue = "id") String sortBy) {
+                                             @RequestParam(defaultValue = "id") Set<String> sortBy) {
         return productService.filterProducts(filter, pageNumber, pageSize, sortBy);
     }
 }
